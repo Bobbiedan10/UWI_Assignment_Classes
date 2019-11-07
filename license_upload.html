@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div id="wrapper">
+	<div class="header">
+		<div id="photo">
+			<img src="images/logo.png">
+		</div>
+		<div>
+			<h1>Barbados Revenue Authority</h1>
+			<h1>Vehicle Licensing and Registration System</h1>
+		</div>
+		<div></div>
+	</div>
+
+	<div class="content">
+		<div id="account">
+			<h2>Driver Sign In</h2>
+		</div>
+		<div>
+			<form action="" method="POST" class="login" id="login" name="driverLoginForm">
+				<div>
+					<label>License Number</label>
+				</div>
+				<div>
+					<input type="text" name="national_Id" placeholder="">
+				</div>
+				<div>
+					<span class="error" id="unameerror"></span>
+				</div>
+				<div>
+					<label>Driver's License Image</label>
+				</div>
+				<div>
+					<input type="file" name="liceFile">
+				</div>
+				<div>
+					<span class="error" id="pworderror"></span>
+				</div>
+				<div></div>
+				<div id="button-holder">
+                    <input type="submit" value="Upload" name="liceUpload">
+                    <input type="reset" value="Cancel" name="reset">
+				</div>	
+				<div></div>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript" src="scripts.js"></script>
+</div>
+</body>
+</html>

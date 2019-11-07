@@ -1,0 +1,523 @@
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+body
+{
+	background-color: lightblue;
+}
+
+#wrapper
+{
+	justify-content: center;
+	align-items: center;
+	display: grid;
+	margin: auto;
+	width: 100%;
+}
+
+.header
+{
+	justify-content: center;
+	align-items: center;
+	display: grid;
+	grid-template-columns: 1fr 3fr 1fr;
+	text-align: center;
+	grid-gap: 2em;
+	
+}
+
+	#photo img
+	{
+		width: 5em;
+	}
+
+	#user
+	{
+		justify-content: center;
+		align-items: center;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 10em;
+		width: 50%;
+		margin: auto;
+		text-align: center;
+	}
+
+	.menu-content
+	{
+		margin: auto;
+		max-height: 0;
+		overflow: hidden;
+		background-color: lightblue;
+
+	}
+	.dropdown-menu
+	{
+		background: #fff;
+		padding: 20px;
+		border-bottom: 2px solid #603d7b;
+		box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+		background-color: lightblue;
+	}
+
+	.dropdown-menu ul
+	{
+		list-style-type: none;
+		padding: 0;
+		background-color: lightblue;
+	}
+
+	.dropdown-menu a
+	{
+		display: block;
+		padding: 10px;
+		text-decoration: none;
+		color: #603d7b;
+		background-color: lightblue;
+	}
+
+	.dropdown-menu label
+	{
+		display: block;
+		cursor: pointer;
+		background-color: lightblue;
+	}
+
+	.dropdown-menu label i
+	{
+		font-size: 24px;
+		background-color: lightblue;
+	}
+
+	input#menus
+	{
+		display: none;
+	}
+	
+	.dropdown-menu input:checked ~ .menu-content
+	{
+		max-height: 100%;
+		z-index: 1;
+		position: absolute;
+		border: 1px solid black;
+		margin-left: 1em;
+		box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+	}
+
+.content
+{
+	justify-content: center;
+	align-items: center;
+	display: grid;
+	grid-gap: 1em;
+	margin: auto;
+}
+
+	#account
+	{
+		text-align: center;
+	}
+
+	#registration
+	{
+		display: grid;
+		grid-template-columns: 1fr 2fr 2fr;
+		text-align: right;
+		grid-gap: 1em;
+	}
+
+	#registration div:nth-child(3n+3)
+	{
+		text-align: left;
+	}
+
+	#registration select
+	{
+		width: 100%;
+	}
+
+	#registration input
+	{
+		width: 100%;
+	}
+
+		#submit
+		{
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-gap: 1em;
+		}
+
+	.login
+	{
+		display: grid;
+		grid-template-columns: 1fr 2fr 2fr;
+		text-align: right;
+		grid-gap: 1em;
+	}
+
+	#button-holder
+	{
+		justify-content: center;
+		align-items: center;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		justify-items: center;
+	}
+
+	.login input
+	{
+		width: 100%;
+	}
+
+	.login input[type="submit"]
+	{
+		width: 100px;
+	}
+
+	.login input[type="reset"]
+	{
+		width: 100px;
+	}
+
+	.contentinner
+	{
+		justify-content: center;
+		align-items: center;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 2em 2em;
+		margin-top: 10%;
+	}
+
+		.contentinner a
+		{
+			text-decoration: none;
+			color: black;
+		}
+
+		#menu:hover
+		{
+			background-color: black;
+			color: white;
+		}
+
+		#menu 
+		{
+			box-sizing: border-box;
+			justify-content: center;
+			align-items: center;
+			display: grid;
+			padding: 30px;
+			border: 1px solid black;
+			width: 80%;
+			height: 300px;
+			text-align: center;
+			margin: auto;
+		}
+
+
+.forgot
+{
+	grid-row-gap: 1em;	
+	align-items: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	width: 60%;
+	margin:auto;
+	text-align: center;
+}
+
+.error
+	{
+		color: red;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px)
+{
+	.header
+	{
+		grid-template-columns: 1fr;
+		padding-bottom: 30px;
+	}
+
+	.header h1
+	{
+		font-size: 24px;
+	}
+
+		#user
+		{
+			grid-template-columns: 1fr;
+			grid-gap: 1em;
+			width: 50%;
+			text-align: left;
+		}
+
+
+		#registration
+		{
+			grid-template-columns: 1fr;
+			text-align: left;
+			grid-gap: 0.5em;
+		}
+
+			#registration label
+			{
+				font-size: 24px;
+			}
+
+		.login
+		{
+			grid-template-columns: 1fr;
+			text-align: left;
+			grid-gap: 0.5em;
+		}
+
+		.contentinner
+		{
+			grid-template-columns: 1fr;
+			margin-top: 10%;
+		}
+
+	.forgot
+	{
+		grid-template-columns: 1fr 1fr;
+		width: 100%;
+	}
+
+	#menu
+	{
+		height: 100px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) 
+{
+	.header
+	{
+		grid-template-columns: 1fr;
+		padding-bottom: 30px;
+	}
+
+	.header h1
+	{
+		font-size: 24px;
+	}
+
+		#user
+		{
+			grid-template-columns: 1fr;
+			grid-gap: 1em;
+			width: 50%;
+			text-align: left;
+		}
+
+		.dropdown-menu input:checked ~ .menu-content
+		{
+			margin-left: 8em;
+		}
+
+
+		#registration
+		{
+			grid-template-columns: 2fr;
+			text-align: left;
+			grid-gap: 0.5em;
+		}
+
+		.login
+		{
+			grid-template-columns: 1fr;
+			text-align: left;
+			grid-gap: 0.5em;
+		}
+
+		.contentinner
+		{
+			grid-template-columns: 1fr;
+			margin-top: 10%;
+		}
+
+	.forgot
+	{
+		grid-template-columns: 1fr 1fr;
+		width: 100%;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) 
+{
+	.header
+	{
+		grid-template-columns: 1fr 3fr 1fr;
+		grid-gap: 2em;
+	}
+
+		#user
+		{	
+			justify-content: center;
+			align-items: center;
+			display: grid;
+			grid-template-columns: 1fr;
+			grid-gap: 1em;
+			width: 40%;
+			text-align: left;
+			margin: auto;
+		}
+
+		.dropdown-menu input:checked ~ .menu-content
+		{
+			margin-left: 0em;
+		}
+
+		#registration
+		{
+			grid-template-columns: 1fr 2fr 2fr;
+			text-align: right;
+			grid-gap: 1em;
+		}
+
+		.login
+		{
+			grid-template-columns: 1fr 2fr 2fr;
+			text-align: right;
+			grid-gap: 1em;
+		}
+
+		.contentinner
+		{
+			grid-template-columns: 1fr 1fr;
+			margin-top: 10%;
+		}
+
+		
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) 
+{
+	.header
+	{
+		grid-template-columns: 1fr 3fr 1fr;
+		text-align: center;
+		grid-gap: 2em;
+	}
+
+		#user
+		{
+			
+			grid-template-columns: 1fr 1fr;
+			grid-gap: 10em;
+			width: 50%;
+		}
+
+		#registration
+		{
+			display: grid;
+			grid-template-columns: 1fr 2fr 2fr;
+			text-align: right;
+			grid-gap: 1em;
+		}
+
+		.login
+		{
+			display: grid;
+			grid-template-columns: 1fr 2fr 2fr;
+			text-align: right;
+			grid-gap: 1em;
+		}
+
+		.login input
+		{
+			width: 100%;
+		}
+
+		.contentinner
+		{
+			justify-content: center;
+			align-items: center;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-gap: 2em 2em;
+			margin-top: 10%;
+		}
+
+			#menu
+			{
+				box-sizing: border-box;
+				justify-content: center;
+				align-items: center;
+				display: grid;
+				padding: 30px;
+				border: 1px solid black;
+				width: 80%;
+				height: 100%;
+				text-align: center;
+				margin: auto;
+			}
+
+
+	.forgot
+	{
+		grid-row-gap: 1em;	
+		align-items: center;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		width: 60%;
+		margin:auto;
+		text-align: center;
+	}
+}
