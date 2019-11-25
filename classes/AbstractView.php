@@ -13,10 +13,21 @@ abstract class AbstractView
     // store data from the database in the view for display
     public function addVar($name, $value)
     {
-        if (!preg_match('^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$', $name)) {
+        if (!preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $name)) {
             trigger_error('Invalid variable name received');
         }
         $this->_vars[$name] = $value;
+    }
+
+    public function addVars(array $vars)
+    {
+        foreach($vars as $k=>$v)
+        {
+            if (!preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $k)) {
+                trigger_error('Invalid variable name received');
+            }
+            $this->_vars[$k] = $v;
+        }
     }
 
     // displays the page with the stored data

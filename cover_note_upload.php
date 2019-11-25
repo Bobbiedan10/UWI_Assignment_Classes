@@ -8,20 +8,20 @@
  require 'classes/Page.php';
  require 'classes/Model.php';
  require 'classes/AbstractView.php';
- require 'classes/Registration.php';
+ require 'classes/CoverNote.php';
  require 'classes/Validator.php';
 
  // create the registration page object
- $registration = new Registration;
+ $cover_note = new CoverNote;
  // view indicates the HTML file to use and display
- $view = $registration->makeView();
+ $view = $cover_note->makeView();
 
  // model stores all of our database queries
- $model = $registration->makeModel();
+ $model = $cover_note->makeModel();
 
  // check to see if the user has posted data to the form
  if (empty($_POST)) {
-     $view->setTemplate('registration.tpl.php');
+     $view->setTemplate('cover_note_upload.tpl.php');
      $view->display();
  }
  // data was posted so we must do the following
@@ -32,7 +32,7 @@ else {
     // 2. If the data is invalid, get and display error messages
     if (!$result) { // validation failed, errors were generated
         $errors = $validator->getErrors();  // an array of strings
-        $view->setTemplate('registration.tpl.php');
+        $view->setTemplate('cover_note_upload.tpl.php');
         $view->addVar('errors', $errors);
         $view->addVars($_POST);
         $view->display();
