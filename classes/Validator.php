@@ -2,16 +2,31 @@
 class Validator
 {
     protected $data = [];
-    protected $registered_validators = ['natl_id'     => 'isIdValid',
-                                        'license_num' => 'isLicenseNumValid',
-                                        'first_name'  => 'isNameValid',
-                                        'last_name'   => 'isNameValid',
+    protected $registered_validators = ['nationalid'  => 'isIdValid',
+                                        'licenseno'   => 'isLicenseNumValid',
+                                        'fname'       => 'isNameValid',
+                                        'lname'       => 'isLNameValid',
                                         'email'       => 'isEmailValid',
                                         'telephone'   => 'isTelephoneValid',
-                                        'address'     => 'isAddressValid',
+                                        'telephone2'  => 'isTelephoneValid',
+                                        'add1'        => 'isAddressValid',
+                                        'add2'        => 'isAddressValid',
+                                        'parish'      => null,
                                         'add_driver'  =>  null,
                                         'cancel_add'  =>  null,
-                                        'validation_done_by_js' =>  null,
+                                        'validation_done_by_js' => null,
+                                        'sign_in'     => null,
+                                        'pword'       => 'isPasswordValid',
+                                        'employeeid'  => 'isEmployeeIdValid',
+                                        'liceFile'    => 'isLicenseUploadValid',
+                                        'liceUpload'  => null,
+                                        'policyNumber'=> 'isPolicyIdValid',
+                                        'dateIssued'  => null,
+                                        'dateExpired' => 'isExpDateValid',
+                                        'cover_note_check' => 'isCoverValid',
+                                        'MAX_FILE_SIZE'=> null,
+                                        'upload'      => null,
+                                        'cancel'      => null,
                                     ];
     protected $errors = [];
 
@@ -75,13 +90,17 @@ class Validator
      * Internal method to update the error message property
      * @param $err_msg  The generated error message
      */
-    protected function setErrors(string $err_msg)
+    protected function setErrors(string $field_name, string $err_msg)
     {
         // abort with an error message if no err_msg was passed :-)
         if (empty($err_msg)) {
             trigger_error('Cannot create an empty error message', E_USER_ERROR);
         }
-        $this->errors[] = $err_msg;
+        if(empty($field_name))
+        {
+            trigger_error('Invalid field name used. Cannot be empty', E_USER_ERROR);
+        }
+        $this->errors[$field_name] = $err_msg;
     }
 
     protected function isIdValid(string $id) : bool
@@ -90,7 +109,7 @@ class Validator
         $last_four = '';
         
         if (empty($id)) {
-            $this->setErrors('No value given for the national id');
+            $this->setErrors('nationalid','Error: Missing Information');
             return false;
         }
 
@@ -99,24 +118,240 @@ class Validator
             list($first_six, $last_four) = explode('-', $id);
         }
         else {
-            $this->setErrors('Hyphen required for the national id number');
+            $this->setErrors('nationalid','Error: Hyphen Missing');
             return false;
         }
         
         if (empty($first_six) || empty($last_four)) {
-            $this->setErrors('Format invalid - part of the id is missing');
+            $this->setErrors('nationalid','Error: Part of ID missing');
             return false;
         }
 
         if (!ctype_digit($first_six) || !ctype_digit($last_four)) {
-            $this->setErrors('Format invalid - part of the id does not contain numbers');
+            $this->setErrors('nationalid','Error: Part of ID missing numbers');
             return false;
         }
 
         if (strlen($first_six) <> 6 || strlen($last_four) <> 4) {
-            $this->setErrors('Format invalid - part(s) of the id has an incorrect number of digits.');
+            $this->setErrors('nationalid','Error: Incorrect digit length');
             return false;
         }
+        else
+            return true;
+    }
+
+    protected function isEmployeeIdValid($id) : bool
+    {
+        $first_3 = '';
+        $middle_3 = '';
+        $last_3 = '';
+        
+        if (empty($id)) {
+            $this->setErrors('employeeid','Error: Missing Information');
+            return false;
+        }
+
+        if (strstr($id, '-')) {
+            // split the id into its corresponding parts since it's not empty and has a hyphen
+            list($first_3, $middle_3, $last_3) = explode('-', $id);
+        }
+        else {
+            $this->setErrors('employeeid','Error: Hyphen(s) Missing');
+            return false;
+        }
+        
+        if (empty($first_3) || empty($middle_3) || empty($last_3)) {
+            $this->setErrors('employeeid','Error: Part of ID missing');
+            return false;
+        }
+
+        if (!ctype_digit($first_3) || !ctype_digit($middle_3) || !ctype_digit($last_3)) {
+            $this->setErrors('employeeid','Error: Part of ID missing numbers');
+            return false;
+        }
+
+        if (strlen($first_3) <> 3 || strlen($middle_3) <> 3 || strlen($last_3) <> 3) {
+            $this->setErrors('employeeid','Error: Incorrect digit length');
+            return false;
+        }
+        else
+            return true;
+    }
+
+    protected function isLicenseNumValid(string $licenseno) : bool
+    {
+        if (empty($licenseno)) {
+            $this->setErrors('licenseno', 'Error: Missing Information');
+            return false;
+        }
+
+        if (strlen($licenseno) < 15) {
+            $this->setErrors('licenseno', 'Error: Incorrect license number length');
+            return false;
+        }
+
+        if (!ctype_digit($licenseno)) {
+            $this->setErrors('licenseno', 'Error: License number must contain only digits');
+            return false;
+        }
+
+        // validating the date
+        $last_eight = substr($licenseno, 6);
+        $yyyy = substr($last_eight, 0, 4);
+        $mm = substr($last_eight, 4, 2);
+        $dd = substr($last_eight, 6);
+        if (!checkdate($mm, $dd, $yyyy)) {
+            $this->setErrors('licenseno', 'Invalid date');
+            return false;
+        }
+        $today = date_create();
+        $license_date = date_create("$yyyy-$mm-$dd");
+        $interval = date_diff($today, $license_date);
+        // creating the right conditional is left as an exercise for you to complete
+        $years = $interval->format('%y');
+        if ( $years < 16) {
+            $this->setErrors('licenseno', 'License number less than 16 years ago ' . $years);
+            return false;
+        }
+        return true;
+    }   
+
+
+
+    protected function isNameValid(string $fname) : bool
+    {
+        if(empty($fname))
+        {
+            $this->setErrors('fname','Error: Missing Information');
+            return false;
+        }
+        if(!ctype_alpha($fname)) 
+        {
+            $this->setErrors('fname','Error:Only Characters allowed');
+            return false;
+        }
+        return true;
+    }
+
+    protected function isLNameValid(string $lname) : bool
+    {
+        if(empty($lname))
+        {
+            $this->setErrors('lname','Error: Missing Information');
+            return false;
+        }
+        if(!ctype_alpha($lname)) 
+        {
+            $this->setErrors('lname','Error: Missing Information');
+            return false;
+        }
+        return true;
+    }
+
+
+    protected function isEmailValid(string $email) : bool
+    {
+        if(empty($email))
+        {
+            $this->setErrors('email','Error: Missing Information');
+            return false;
+        }
+        // Validate email 
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) { 
+             return true;
+        }  
+        else { 
+            $this->setErrors('email','Format invalid'); 
+            return false;
+        } 
+    }
+
+    protected function isTelephoneValid(string $tele) : bool
+    {
+        return true;
+    }
+
+    protected function isAddressValid(string $add1) : bool
+    {
+        if(empty($add1))
+        {
+            $this->setErrors('add1', 'Error: Missing Information');
+            return false;
+        }
+
+        return true;
+
+    }
+
+    protected function isPasswordValid(string $pword) : bool
+    {
+        if (empty($pword))
+        {
+            $this->setErrors('pword', 'Error: Missing Information');
+            return false;
+        }
+        
+        if(strlen($pword) < 8 || strlen($pword) > 16)
+        {
+            $this->setErrors('pword', 'Error: 8-16 characters allowed');
+            return false;
+        }
+        
+        if(ctype_alpha($pword))
+        {
+            $this->setErrors('pword', 'Error: Must contain a number');
+            return false;
+        }
+
+        if(ctype_digit($pword))
+        {
+            $this->setErrors('pword', 'Error: Must contain letters');
+            return false;
+        }
+        
+        return true;     
+    }
+
+    protected function isLicenseUploadValid($liceFile) : bool
+    {
+        return true;
+        
+    }
+
+    protected function isPolicyIdValid(string $policyNumber) : bool
+    {
+        $ID = substr($policyNumber, 2);
+        return true;
+    }
+
+    protected function isCoverValid(string $data) : bool
+    {
+        if(empty($_FILES))
+        {
+            $this->setErrors('coverNote', 'Error: File Missing');
+            return false;
+        }
+        if(isset($_FILES['coverNote']))
+        {
+            if($_FILES['coverNote']['type'] != 'file/type')
+            {
+                $this->setErrors('coverNote', 'Error: Invalid file type');
+                return false;
+            }
+        }
+        if(isset($_FILES['liceFile']))
+        {
+            if($_FILES['liceFile']['type'] != 'image/png' || 'image/jpg'|| 'image/jpeg')
+            {
+                $this->setErrors('liceFile', 'Error: Invalid file type');
+                return false;
+            }
+            return true;
+        }
+    }
+
+    protected function isExpDateValid($date)
+    {
         return true;
     }
 }

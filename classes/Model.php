@@ -1,7 +1,7 @@
 <?php
 abstract class Model
 {
-    private $sql = null;
+    public $sql = null;
 
     public function __construct(string $user, string $pass, string $db, string $host)
     {
@@ -15,7 +15,7 @@ abstract class Model
     abstract public function findall(string $tablename);
 
     // Returns one record from a table with the given id
-    abstract public function find(string $tablename, string $id);
+    abstract public function find(string $tablename, array $fields);
 
     // Deletes a record from a table with given id
     abstract public function del(string $tablename, string $id);
